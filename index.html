@@ -3,174 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Sederhana</title>
+    <title>Website Galeri Gambar</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
         }
 
         header {
-            background: #333;
-            color: #fff;
-            padding: 10px 0;
+            background-color: #e60023; /* Warna header */
+            color: white;
+            padding: 20px;
             text-align: center;
+            font-size: 1.5em;
         }
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
+        nav {
+            margin: 15px 0;
         }
 
         nav a {
-            color: #fff;
+            color: white;
+            margin: 0 15px;
             text-decoration: none;
         }
 
-        nav a:hover {
-            color: #ff9800;
-        }
-
-        section {
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
             padding: 20px;
-            margin: 10px;
-            background: #fff;
-            border-radius: 5px;
+            max-width: 1200px;
+            margin: auto;
         }
 
-        img {
+        .grid-item {
+            background-color: white;
             border-radius: 10px;
-            max-width: 100%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .grid-item img {
+            width: 100%;
             height: auto;
+            display: block;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.05);
         }
 
         footer {
             text-align: center;
-            padding: 10px 0;
-            background: #333;
-            color: #fff;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
         }
 
-        @media (max-width: 768px) {
-            nav ul li {
-                display: block;
-                margin: 10px 0;
-            }
-
-            section {
-                margin: 5px;
-            }
-
-            h2, h3 {
-                text-align: center;
-            }
+        #upload {
+            text-align: center;
+            margin: 20px;
         }
 
-        /* Hide images by default */
-        .hidden {
-            display: none;
+        #upload input[type="file"] {
+            display: none; /* Sembunyikan input file */
         }
 
-        #game {
-            margin-top: 20px;
+        #upload button {
+            padding: 10px 20px;
+            background-color: #e60023; /* Warna tombol */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        #result {
-            font-weight: bold;
-            color: #333;
-            margin-top: 10px;
+        #upload button:hover {
+            background-color: #d5001c;
         }
     </style>
 </head>
 <body>
+
     <header>
-        <h1>Selamat Datang di Website Saya</h1>
+        Website Galeri Gambar
         <nav>
-            <ul>
-                <li><a href="#about">Tentang</a></li>
-                <li><a href="#services">Layanan</a></li>
-                <li><a href="#contact">Kontak</a></li>
-            </ul>
+            <a href="#upload">Tambah Gambar</a>
+            <a href="#layanan1">Galeri</a>
+            <a href="https://web.whatsapp.com/">WhatsApp</a>
+            <a href="https://www.instagram.com/accounts/login/">Instagram</a>
+            <a href="https://www.facebook.com/?locale=id_ID">Facebook</a>
+            <a href="googlephotos://">Google Foto</a>
         </nav>
     </header>
-    
-    <section id="about">
-        <h2>Tentang Kami</h2>
-        <p>Di dunia yang terus bergerak dengan cepat ini, kita sering kali lupa untuk menghargai momen-momen kecil yang membentuk hidup kita. Website ini lahir dari sebuah motivasi sederhana: untuk menyimpan dan merayakan kenangan-kenangan berharga yang mungkin akan terlupakan seiring berjalannya waktu.</p>
+
+    <section id="upload">
+        <h2>Tambah Gambar</h2>
+        <input type="file" id="imageUpload" accept="image/*" />
+        <button id="uploadButton">Pilih Gambar</button>
     </section>
 
-    <section id="services">
-        <h2>Layanan Kami</h2>
-
-        <h3>Layanan 1: Gambar</h3>
-        <p>Kami menyediakan galeri gambar yang dapat diakses untuk mengabadikan momen-momen berharga. Tekan tombol di bawah untuk melihat gambar secara bertahap:</p>
-        <button onclick="showNextImage()">Tampilkan Gambar Berikutnya</button>
-        <div id="imageGallery">
-            <img id="image1" src="https://drive.google.com/uc?export=view&id=YOUR_IMAGE_ID_1" alt="Kenangan Gambar 1" class="hidden" />
-            <img id="image2" src="https://drive.google.com/uc?export=view&id=YOUR_IMAGE_ID_2" alt="Kenangan Gambar 2" class="hidden" />
-            <img id="image3" src="https://drive.google.com/uc?export=view&id=YOUR_IMAGE_ID_3" alt="Kenangan Gambar 3" class="hidden" />
-            <!-- Tambahkan lebih banyak gambar sesuai kebutuhan -->
+    <section id="layanan1">
+        <h2>Galeri Gambar</h2>
+        <div class="grid-container" id="imageGallery">
+            <!-- Gambar akan dimuat secara dinamis -->
         </div>
-
-        <h3>Layanan 2: Game Sederhana</h3>
-        <p>Kamu bisa mencoba permainan Sudoku dengan menekan tombol di bawah:</p>
-        <button onclick="showSudoku()">Mainkan Sudoku</button>
-        <div id="sudokuFrame" class="hidden">
-            <iframe src="https://sudoku.com" width="100%" height="500px" title="Sudoku"></iframe>
-        </div>
-
-        <h3>Layanan 3: Lagu</h3>
-        <p>Ingin mendengarkan koleksi lagu favorit? Tekan tombol di bawah untuk melihat playlist:</p>
-        <button onclick="showSpotify()">Putar Playlist</button>
-        <div id="spotifyFrame" class="hidden">
-            <iframe src="https://open.spotify.com/embed/playlist/2JfuL84CSUmBPHdNuQT7Ac?utm_source=generator" width="100%" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2>Kontak Kami</h2>
-        <p>Email: info@website.com</p>
-        <p>Tel: +62 123 456 7890</p>
     </section>
 
     <footer>
-        <p>&copy; 2024 Website Sederhana. Semua hak dilindungi.</p>
+        &copy; 2024 Website Galeri Gambar. Semua hak dilindungi.
     </footer>
 
     <script>
-        let currentImageIndex = 1;
+        const images = []; // Array untuk menyimpan gambar
 
-        function showNextImage() {
-            const totalImages = 3; // Jumlah gambar yang ada
-            const nextImage = document.getElementById('image' + currentImageIndex);
-            
-            if (nextImage) {
-                nextImage.classList.remove('hidden');
-                currentImageIndex++;
+        // Fungsi untuk membuat elemen gambar dalam grid
+        function createImageItem(src) {
+            const gridItem = document.createElement('div');
+            gridItem.classList.add('grid-item');
+
+            const img = document.createElement('img');
+            img.src = src;
+            gridItem.appendChild(img);
+
+            return gridItem;
+        }
+
+        // Fungsi untuk menambahkan gambar dari input
+        function addImage() {
+            const fileInput = document.getElementById('imageUpload');
+            const files = fileInput.files;
+
+            if (files.length > 0) {
+                const file = files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const imageItem = createImageItem(e.target.result);
+                    document.getElementById('imageGallery').appendChild(imageItem);
+                    images.push(e.target.result); // Simpan gambar ke array
+                }
+
+                reader.readAsDataURL(file); // Membaca file sebagai Data URL
+                fileInput.value = ''; // Reset input
+            } else {
+                alert("Silakan pilih gambar yang valid.");
             }
-            
-            if (currentImageIndex > totalImages) {
-                alert('Semua gambar telah ditampilkan.');
-                currentImageIndex = totalImages; // Tetap di gambar terakhir
-            }
         }
 
-        function showSudoku() {
-            var sudokuFrame = document.getElementById('sudokuFrame');
-            sudokuFrame.classList.toggle('hidden');
-        }
+        // Event listener untuk tombol "Pilih Gambar"
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            document.getElementById('imageUpload').click(); // Trigger click pada input file
+        });
 
-        function showSpotify() {
-            var spotifyFrame = document.getElementById('spotifyFrame');
-            spotifyFrame.classList.toggle('hidden');
-        }
+        // Event listener untuk input file
+        document.getElementById('imageUpload').addEventListener('change', addImage);
+
     </script>
-</body>                                
+
+</body>
+</html><!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Galeri Gambar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #e60023; /* Warna header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        nav {
+            margin: 15px 0;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .grid-item {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #upload {
+            text-align: center;
+            margin: 20px;
+        }
+
+        #upload input[type="file"] {
+            display: none; /* Sembunyikan input file */
+        }
+
+        #upload button {
+            padding: 10px 20px;
+            background-color: #e60023; /* Warna tombol */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #upload button:hover {
+            background-color: #d5001c;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        Website Galeri Gambar
+        <nav>
+            <a href="#upload">Tambah Gambar</a>
+            <a href="#layanan1">Galeri</a>
+            <a href="https://web.whatsapp.com/">WhatsApp</a>
+            <a href="https://www.instagram.com/accounts/login/">Instagram</a>
+            <a href="https://www.facebook.com/?locale=id_ID">Facebook</a>
+            <a href="googlephotos://">Google Foto</a>
+        </nav>
+    </header>
+
+    <section id="upload">
+        <h2>Tambah Gambar</h2>
+        <input type="file" id="imageUpload" accept="image/*" />
+        <button id="uploadButton">Pilih Gambar</button>
+    </section>
+
+    <section id="layanan1">
+        <h2>Galeri Gambar</h2>
+        <div class="grid-container" id="imageGallery">
+            <!-- Gambar akan dimuat secara dinamis -->
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2024 Website Galeri Gambar. Semua hak dilindungi.
+    </footer>
+
+    <script>
+        const images = []; // Array untuk menyimpan gambar
+
+        // Fungsi untuk membuat elemen gambar dalam grid
+        function createImageItem(src) {
+            const gridItem = document.createElement('div');
+            gridItem.classList.add('grid-item');
+
+            const img = document.createElement('img');
+            img.src = src;
+            gridItem.appendChild(img);
+
+            return gridItem;
+        }
+
+        // Fungsi untuk menambahkan gambar dari input
+        function addImage() {
+            const fileInput = document.getElementById('imageUpload');
+            const files = fileInput.files;
+
+            if (files.length > 0) {
+                const file = files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const imageItem = createImageItem(e.target.result);
+                    document.getElementById('imageGallery').appendChild(imageItem);
+                    images.push(e.target.result); // Simpan gambar ke array
+                }
+
+                reader.readAsDataURL(file); // Membaca file sebagai Data URL
+                fileInput.value = ''; // Reset input
+            } else {
+                alert("Silakan pilih gambar yang valid.");
+            }
+        }
+
+        // Event listener untuk tombol "Pilih Gambar"
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            document.getElementById('imageUpload').click(); // Trigger click pada input file
+        });
+
+        // Event listener untuk input file
+        document.getElementById('imageUpload').addEventListener('change', addImage);
+
+    </script>
+
+</body>
 </html>
